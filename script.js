@@ -1,5 +1,4 @@
-// Get a random number from 0 to 2.
-// 0 -> return rock, 1 -> return paper, 2 -> return scissors
+// Return rock paper or scissors randomly
 let computerPlay = () => {
     let randNum = Math.floor(Math.random() * 3);
     if (randNum === 0) {
@@ -37,28 +36,46 @@ let getPlayerInput = () => {
     return playerSelection;
 }
 
-// Play 5 rounds and report who won the most rounds
-let game = () => {
-    let playerScore = 0;
-    let computerScore = 0;
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = getPlayerInput();
-        let roundResult = playRound(playerSelection, computerPlay());
-        if (roundResult.includes("Win")) {
-            playerScore++;
-        } else if (roundResult.includes("Lose")) {
-            computerScore++;
+let playerScore = 0;
+let computerScore = 0;
+// Get all DOM elements used
+const resultDiv = document.querySelector(".round-result");
+const playerScoreDiv = document.querySelector(".player-score");
+const cpuScoreDiv = document.querySelector(".cpu-score");
+const finalResultDiv = document.querySelector(".final-results");
+const buttons = document.querySelectorAll("button");
+
+for (const btn of buttons) {
+    btn.addEventListener("click", () => {
+        if (playerScore < 5 && computerScore < 5){
+            let playerSelection = btn.textContent;
+            let roundResult = playRound(playerSelection, computerPlay()); // Play a round of RPS with the button the player pressed
+            printRoundResult(roundResult);
+            changeScore(roundResult);
         }
-        console.log(roundResult);
-    }
-    let result;
-    if (playerScore > computerScore) {
-        result = "You Win!";
-    } else if (playerScore < computerScore) {
-        result = "You lose!";
-    } else {
-        result = "Tie!";
-    }
-    result += ` ${playerScore} - ${computerScore}`
-    console.log(result);
+    });
 }
+
+// Print round results to screen
+let printRoundResult = (text) => {
+    resultDiv.textContent = text;
+}
+
+// Change scores based on the previous round
+let changeScore = (roundResult) => {
+    if (roundResult.includes("Win")) {
+        playerScore++;
+    } else if (roundResult.includes("Lose")) {
+        computerScore++;
+    }
+    playerScoreDiv.textContent = playerScore;
+    cpuScoreDiv.textContent = computerScore;
+
+    // Declare the winner at 5 rounds won
+    if (playerScore >= 5) {
+        finalResultDiv.textContent = "You Win!";
+    } else if (computerScore >= 5) {
+        finalResultDiv.textContent = "You Lose!";
+    }
+}
+

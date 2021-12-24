@@ -1,0 +1,36 @@
+button {
+    height: 100px;
+    width: 150px;
+    font-size: 24px;
+}
+
+.button-group {
+    display: flex;
+    gap: 24px;
+}
+
+.round-result {
+    margin-top: 16px;
+    height: 32px;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.scores {
+    display: flex;
+    gap: 32px;
+    height: 32px;
+    margin-top: 16px;
+}
+
+.final-results {
+    height: 32px;
+    margin-top: 16px;
+}
